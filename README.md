@@ -2,7 +2,7 @@
 
 A small, dependency-free TypeScript demonstration by **Gbolahan Odulate** that separates valid JSON syntax from an application's request contract.
 
-[Try the interactive lab](https://gbolahan-odulate.smart-char-6704.chatgpt.site/lab) · [Read the design note](https://gbolahan-odulate.smart-char-6704.chatgpt.site/writing/api-contracts-beyond-valid-json) · [Professional background](https://www.linkedin.com/in/gbolahanodulate/)
+[Try the interactive lab](https://gbolahan-odulate.gbolisco.chatgpt.site/lab) · [Read the design note](https://gbolahan-odulate.gbolisco.chatgpt.site/writing/api-contracts-beyond-valid-json) · [Professional background](https://www.linkedin.com/in/gbolahanodulate/)
 
 ## Run the tests
 
@@ -44,4 +44,4 @@ The word normalized in the result names the accepted object; values are not trim
 
 Gbolahan Odulate is an independent software developer and technical consultant based in The Colony, Texas.
 
-[Website](https://gbolahan-odulate.smart-char-6704.chatgpt.site) · [LinkedIn](https://www.linkedin.com/in/gbolahanodulate/)
+[Website](https://gbolahan-odulate.gbolisco.chatgpt.site) · [LinkedIn](https://www.linkedin.com/in/gbolahanodulate/)
