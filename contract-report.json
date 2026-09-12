@@ -1,0 +1,440 @@
+{
+  "generatedAtUtc": "2026-09-11T23:54:21.303Z",
+  "nodeVersion": "v24.19.0",
+  "project": "API Contract Lab",
+  "kind": "Deterministic fixture observations; not a performance benchmark",
+  "fixtures": 22,
+  "matched": 22,
+  "accepted": 6,
+  "rejected": 16,
+  "cases": [
+    {
+      "id": "valid",
+      "label": "Documented request",
+      "inputLengthCodeUnits": 66,
+      "inputSha256": "35c2a9515e3e63670d822dada4655a65e348ca95aa9fa998916cb9c320139cdb",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"demo-customer\",\n  \"amountCents\": 1250,\n  \"currency\": \"USD\"\n}"
+      },
+      "matched": true,
+      "reason": "All three fields satisfy the published rules."
+    },
+    {
+      "id": "string-amount",
+      "label": "Number supplied as a string",
+      "inputLengthCodeUnits": 68,
+      "inputSha256": "4aec4b7e72bc62d14c4bdab89ae2558ec15082078cde38e2ed24560e6a15b1b6",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "amountCents must be a positive safe integer, supplied as a JSON number."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "The contract does not convert strings to numbers."
+    },
+    {
+      "id": "fraction",
+      "label": "Fractional cents",
+      "inputLengthCodeUnits": 65,
+      "inputSha256": "a40655a840cd4a92e6d62cbb61f674a695a497e02cafa99d62fa8db49836811d",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "amountCents must be a positive safe integer, supplied as a JSON number."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "The parsed amount must be an integer."
+    },
+    {
+      "id": "zero",
+      "label": "Zero amount",
+      "inputLengthCodeUnits": 63,
+      "inputSha256": "33f869c64eecc5b901e6a2fc136e721c12793181b91f0653fe95ccff1e0f6e3a",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "amountCents must be a positive safe integer, supplied as a JSON number."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "This example requires a positive amount."
+    },
+    {
+      "id": "negative",
+      "label": "Negative amount",
+      "inputLengthCodeUnits": 64,
+      "inputSha256": "906b4893ec202d295413805c424a862f5ee9fd14d11e7989fb18a5432d87742e",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "amountCents must be a positive safe integer, supplied as a JSON number."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Refund semantics are outside this order contract."
+    },
+    {
+      "id": "max-safe",
+      "label": "Maximum safe integer",
+      "inputLengthCodeUnits": 78,
+      "inputSha256": "c71af4291b2b705bf71619525e6201ea510ce2c4ddd271c9cc292fab763fe9b5",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"demo-customer\",\n  \"amountCents\": 9007199254740991,\n  \"currency\": \"USD\"\n}"
+      },
+      "matched": true,
+      "reason": "This is the allowed numeric boundary, not a realistic pricing limit."
+    },
+    {
+      "id": "unsafe",
+      "label": "Integer above safe range",
+      "inputLengthCodeUnits": 78,
+      "inputSha256": "526afdfa3663bba50f37cf38ea5261bdbec4b0a336848fe8c904d8bebb4a715a",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "amountCents must be a positive safe integer, supplied as a JSON number."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "The parsed value lies outside JavaScript's safe integer range."
+    },
+    {
+      "id": "blank-id",
+      "label": "Whitespace-only customer ID",
+      "inputLengthCodeUnits": 58,
+      "inputSha256": "80d0758aaad5fb8a7ac7bbcc4a7a09ee9ad8544d26e1b5f60399a1d8b16129f3",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "customerId must be a non-empty string of at most 128 characters."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "A whitespace-only identifier is empty for this contract."
+    },
+    {
+      "id": "missing-id",
+      "label": "Missing customer ID",
+      "inputLengthCodeUnits": 37,
+      "inputSha256": "c22f32fff7069d95690c771bae2bbb175ce10357c1270d381c85bd6a55230572",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "customerId must be a non-empty string of at most 128 characters."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "All three fields are required."
+    },
+    {
+      "id": "id-limit",
+      "label": "Customer ID at 128 code units",
+      "inputLengthCodeUnits": 181,
+      "inputSha256": "579e4475791d12bf699f166cad76a77310f8753b86db82e9fe737f4a30cc52ab",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"amountCents\": 1250,\n  \"currency\": \"USD\"\n}"
+      },
+      "matched": true,
+      "reason": "The implementation measures JavaScript UTF-16 string length."
+    },
+    {
+      "id": "id-too-long",
+      "label": "Customer ID at 129 code units",
+      "inputLengthCodeUnits": 182,
+      "inputSha256": "f436b1b2e23f5bff5bcc40ca2c39f2ce5eb0adccb5cbb5633545aa1e41843043",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "customerId must be a non-empty string of at most 128 characters."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "One unit beyond the documented limit is rejected."
+    },
+    {
+      "id": "extra",
+      "label": "Unexpected admin property",
+      "inputLengthCodeUnits": 79,
+      "inputSha256": "b73ff372b04bbefeca03afa5e95b7fc221cfca84d47ff3d1a26f6984558680f9",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "Unexpected field: admin"
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Only the three documented own properties are accepted."
+    },
+    {
+      "id": "currency",
+      "label": "Unsupported currency",
+      "inputLengthCodeUnits": 66,
+      "inputSha256": "cd3f955f97473d59eebcea75725f54673c8ea8fd3fd2eecf0b41c72034784caa",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "currency must be USD, GBP, or EUR."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "The supported set is deliberately narrow."
+    },
+    {
+      "id": "lowercase",
+      "label": "Lowercase currency",
+      "inputLengthCodeUnits": 66,
+      "inputSha256": "6897792a0f1f45b5380f5f9014149175b93df9dc4dced423a9aa3ef8e1ced57f",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "currency must be USD, GBP, or EUR."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Currency codes are case-sensitive here."
+    },
+    {
+      "id": "array",
+      "label": "Top-level array",
+      "inputLengthCodeUnits": 2,
+      "inputSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "The top-level value must be an object."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Valid JSON does not imply an order-shaped object."
+    },
+    {
+      "id": "syntax",
+      "label": "Trailing comma",
+      "inputLengthCodeUnits": 55,
+      "inputSha256": "4a960523c23bc52fc051e5401a4ef87f74d6e3c69107a1ae5b3a9c768236433e",
+      "expected": {
+        "syntaxValid": false,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": false,
+        "contractValid": false,
+        "issues": [
+          "Invalid JSON syntax. Check commas, quotes, and brackets."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Parsing fails before contract checks can run."
+    },
+    {
+      "id": "gbp",
+      "label": "Supported GBP request",
+      "inputLengthCodeUnits": 66,
+      "inputSha256": "e7e2897133c6a793eaf19b325c29432fe532363360ac1f1628678bea077c7e36",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"demo-customer\",\n  \"amountCents\": 1250,\n  \"currency\": \"GBP\"\n}"
+      },
+      "matched": true,
+      "reason": "GBP is in the documented supported set."
+    },
+    {
+      "id": "eur",
+      "label": "Supported EUR request",
+      "inputLengthCodeUnits": 66,
+      "inputSha256": "3064642d378e4523c59bdb7003852efa7c0df62316c809bd3c8b888f43123d30",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"demo-customer\",\n  \"amountCents\": 1250,\n  \"currency\": \"EUR\"\n}"
+      },
+      "matched": true,
+      "reason": "EUR is in the documented supported set."
+    },
+    {
+      "id": "proto",
+      "label": "Unexpected __proto__ property",
+      "inputLengthCodeUnits": 81,
+      "inputSha256": "4bbaa58b573c0cb1bcfe98942050eec808236e415882679c177416b1dc0b636b",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "Unexpected field: __proto__"
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Parsed input is inspected and reconstructed, not merged into another object."
+    },
+    {
+      "id": "null",
+      "label": "Top-level null",
+      "inputLengthCodeUnits": 4,
+      "inputSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": false,
+        "issues": [
+          "The top-level value must be an object."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "Null parses successfully but is not an order object."
+    },
+    {
+      "id": "input-limit",
+      "label": "Input at 131,072 code units",
+      "inputLengthCodeUnits": 131072,
+      "inputSha256": "5a6d47cd52d6c7b70110f2d7c8f805acbea0253aff53462222347eeab6b92115",
+      "expected": {
+        "syntaxValid": true,
+        "contractValid": true
+      },
+      "actual": {
+        "syntaxValid": true,
+        "contractValid": true,
+        "issues": [],
+        "normalized": "{\n  \"customerId\": \"demo-customer\",\n  \"amountCents\": 1250,\n  \"currency\": \"USD\"\n}"
+      },
+      "matched": true,
+      "reason": "JSON permits trailing whitespace; the length boundary is inclusive."
+    },
+    {
+      "id": "oversize",
+      "label": "Input at 131,073 code units",
+      "inputLengthCodeUnits": 131073,
+      "inputSha256": "660b10e342876c0c20e4963c28956e3576606a47c7d2f9248899bbffa2dc10af",
+      "expected": {
+        "syntaxValid": false,
+        "contractValid": false
+      },
+      "actual": {
+        "syntaxValid": false,
+        "contractValid": false,
+        "issues": [
+          "Input exceeds this demo's 131,072-character limit."
+        ],
+        "normalized": null
+      },
+      "matched": true,
+      "reason": "The resource gate stops validation before parsing; syntaxValid false here does not prove malformed JSON."
+    }
+  ]
+}

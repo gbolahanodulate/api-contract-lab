@@ -1,9 +1,9 @@
 {
   "name": "api-contract-lab",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "A small demonstration of JSON syntax and API request contract validation.",
   "engines": {"node": ">=22.6.0"},
-  "scripts": {"test": "node --experimental-strip-types --test contract.test.mjs"}
+  "scripts": {"test": "node --experimental-strip-types --test contract.test.mjs contract-cases.test.mjs", "report":"node --experimental-strip-types report.mjs"}
 }
